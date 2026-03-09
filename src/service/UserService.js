@@ -1,17 +1,16 @@
 export class UserService {
-    #storageKey = 'ew-academy-users';
+    #storageKey = 'streaming-app-users';
 
     async getDefaultUsers() {
         const response = await fetch('./data/users.json');
         const users = await response.json();
+        
         this.#setStorage(users);
-
         return users;
     }
 
     async getUsers() {
-        const users = this.#getStorage();
-        return users;
+        return this.#getStorage();
     }
 
     async getUserById(userId) {
@@ -42,6 +41,4 @@ export class UserService {
     #setStorage(data) {
         sessionStorage.setItem(this.#storageKey, JSON.stringify(data));
     }
-
-
 }

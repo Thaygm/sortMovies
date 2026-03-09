@@ -2,10 +2,11 @@ import { View } from './View.js';
 
 export class ModelView extends View {
     #trainModelBtn = document.querySelector('#trainModelBtn');
-    #purchasesArrow = document.querySelector('#purchasesArrow');
-    #purchasesDiv = document.querySelector('#purchasesDiv');
-    #allUsersPurchasesList = document.querySelector('#allUsersPurchasesList');
+    #historyArrow = document.querySelector('#historyArrow'); 
+    #historyDiv = document.querySelector('#historyDiv');     
+    #allUsersWatchList = document.querySelector('#allUsersWatchList'); 
     #runRecommendationBtn = document.querySelector('#runRecommendationBtn');
+    
     #onTrainModel;
     #onRunRecommendation;
 
@@ -17,6 +18,7 @@ export class ModelView extends View {
     registerTrainModelCallback(callback) {
         this.#onTrainModel = callback;
     }
+    
     registerRunRecommendationCallback(callback) {
         this.#onRunRecommendation = callback;
     }
@@ -25,56 +27,58 @@ export class ModelView extends View {
         this.#trainModelBtn.addEventListener('click', () => {
             this.#onTrainModel();
         });
+        
         this.#runRecommendationBtn.addEventListener('click', () => {
             this.#onRunRecommendation();
         });
 
-        this.#purchasesDiv.addEventListener('click', () => {
-            const purchasesList = this.#allUsersPurchasesList;
-
-            const isHidden = window.getComputedStyle(purchasesList).display === 'none';
+        this.#historyDiv.addEventListener('click', () => {
+            const historyList = this.#allUsersWatchList;
+            const isHidden = window.getComputedStyle(historyList).display === 'none';
 
             if (isHidden) {
-                purchasesList.style.display = 'block';
-                this.#purchasesArrow.classList.remove('bi-chevron-down');
-                this.#purchasesArrow.classList.add('bi-chevron-up');
+                historyList.style.display = 'block';
+                this.#historyArrow.classList.replace('bi-chevron-down', 'bi-chevron-up');
             } else {
-                purchasesList.style.display = 'none';
-                this.#purchasesArrow.classList.remove('bi-chevron-up');
-                this.#purchasesArrow.classList.add('bi-chevron-down');
+                historyList.style.display = 'none';
+                this.#historyArrow.classList.replace('bi-chevron-up', 'bi-chevron-down');
             }
         });
-
     }
+
     enableRecommendButton() {
         this.#runRecommendationBtn.disabled = false;
     }
+
     updateTrainingProgress(progress) {
         this.#trainModelBtn.disabled = true;
-        this.#trainModelBtn.innerHTML = '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Training...';
+        this.#trainModelBtn.innerHTML = `
+            <span class="spinner-border spinner-border-sm" role="status"></span> 
+            Treinando IA...
+        `;
 
         if (progress.progress === 100) {
             this.#trainModelBtn.disabled = false;
-            this.#trainModelBtn.innerHTML = 'Train Recommendation Model';
+            this.#trainModelBtn.innerHTML = 'Treinar Modelo de Recomendação';
         }
     }
 
-    renderAllUsersPurchases(users) {
+    renderAllUsersWatchHistory(users) {
         const html = users.map(user => {
-            const purchasesHtml = user.purchases.map(purchase => {
-                return `<span class="badge bg-light text-dark me-1 mb-1">${purchase.name}</span>`;
+            const watchHtml = user.watched.map(item => {
+                return `<span class="badge bg-dark text-light me-1 mb-1">${item.title}</span>`;
             }).join('');
 
             return `
-                <div class="user-purchase-summary">
-                    <h6>${user.name} (Age: ${user.age})</h6>
-                    <div class="purchases-badges">
-                        ${purchasesHtml || '<span class="text-muted">No purchases</span>'}
+                <div class="user-watch-summary mb-3">
+                    <h6>${user.name} (Idade: ${user.age})</h6>
+                    <div class="watch-badges">
+                        ${watchHtml || '<span class="text-muted">Nenhum histórico</span>'}
                     </div>
                 </div>
             `;
         }).join('');
 
-        this.#allUsersPurchasesList.innerHTML = html;
+        this.#allUsersWatchList.innerHTML = html;
     }
 }

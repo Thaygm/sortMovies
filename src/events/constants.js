@@ -1,15 +1,14 @@
 export const events = {
     userSelected: 'user:selected',
     usersUpdated: 'users:updated',
-    purchaseAdded: 'purchase:added',
-    purchaseRemoved: 'purchase:remove',
+    watchAdded: 'watch:added',
+    watchRemoved: 'watch:remove',
     modelTrain: 'training:train',
     trainingComplete: 'training:complete',
-
     modelProgressUpdate: 'model:progress-update',
     recommendationsReady: 'recommendations:ready',
     recommend: 'recommend',
-}
+};
 
 export const workerEvents = {
     trainingComplete: 'training:complete',
@@ -19,4 +18,4 @@ export const workerEvents = {
     progressUpdate: 'progress:update',
     tfVisData: 'tfvis:data',
     tfVisLogs: 'tfvis:logs',
-}
+};

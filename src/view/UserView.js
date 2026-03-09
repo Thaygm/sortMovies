@@ -3,12 +3,12 @@ import { View } from './View.js';
 export class UserView extends View {
     #userSelect = document.querySelector('#userSelect');
     #userAge = document.querySelector('#userAge');
-    #pastPurchasesList = document.querySelector('#pastPurchasesList');
+    #watchedList = document.querySelector('#watchedList');
 
-    #purchaseTemplate;
+    #mediaTemplate;
     #onUserSelect;
-    #onPurchaseRemove;
-    #pastPurchaseElements = [];
+    #onWatchRemove;
+    #watchedElements = [];
 
     constructor() {
         super();
@@ -16,7 +16,7 @@ export class UserView extends View {
     }
 
     async init() {
-        this.#purchaseTemplate = await this.loadTemplate('./src/view/templates/past-purchase.html');
+        this.#mediaTemplate = await this.loadTemplate('./src/view/templates/past-watch.html');
         this.attachUserSelectListener();
     }
 
@@ -24,8 +24,8 @@ export class UserView extends View {
         this.#onUserSelect = callback;
     }
 
-    registerPurchaseRemoveCallback(callback) {
-        this.#onPurchaseRemove = callback;
+    registerWatchRemoveCallback(callback) {
+        this.#onWatchRemove = callback;
     }
 
     renderUserOptions(users) {
@@ -40,46 +40,46 @@ export class UserView extends View {
         this.#userAge.value = user.age;
     }
 
-    renderPastPurchases(pastPurchases) {
-        if (!this.#purchaseTemplate) return;
+    renderPastWatches(watchedHistory) {
+        if (!this.#mediaTemplate) return;
 
-        if (!pastPurchases || pastPurchases.length === 0) {
-            this.#pastPurchasesList.innerHTML = '<p>No past purchases found.</p>';
+        if (!watchedHistory || watchedHistory.length === 0) {
+            this.#watchedList.innerHTML = '<p class="text-muted">Nenhum filme assistido ainda.</p>';
             return;
         }
 
-        const html = pastPurchases.map(product => {
-            return this.replaceTemplate(this.#purchaseTemplate, {
-                ...product,
-                product: JSON.stringify(product)
+        const html = watchedHistory.map(media => {
+            return this.replaceTemplate(this.#mediaTemplate, {
+                ...media,
+                media: JSON.stringify(media)
             });
         }).join('');
 
-        this.#pastPurchasesList.innerHTML = html;
-        this.attachPurchaseClickHandlers();
+        this.#watchedList.innerHTML = html;
+        this.attachWatchClickHandlers();
     }
 
-    addPastPurchase(product) {
-
-        if (this.#pastPurchasesList.innerHTML.includes('No past purchases found')) {
-            this.#pastPurchasesList.innerHTML = '';
+    addPastWatch(media) {
+        
+        if (this.#watchedList.innerHTML.includes('Nenhum filme assistido')) {
+            this.#watchedList.innerHTML = '';
         }
 
-        const purchaseHtml = this.replaceTemplate(this.#purchaseTemplate, {
-            ...product,
-            product: JSON.stringify(product)
+        const watchHtml = this.replaceTemplate(this.#mediaTemplate, {
+            ...media,
+            media: JSON.stringify(media)
         });
 
-        this.#pastPurchasesList.insertAdjacentHTML('afterbegin', purchaseHtml);
+        this.#watchedList.insertAdjacentHTML('afterbegin', watchHtml);
 
-        const newPurchase = this.#pastPurchasesList.firstElementChild.querySelector('.past-purchase');
-        newPurchase.classList.add('past-purchase-highlight');
+        const newWatch = this.#watchedList.firstElementChild.querySelector('.past-watch');
+        newWatch.classList.add('watch-highlight');
 
         setTimeout(() => {
-            newPurchase.classList.remove('past-purchase-highlight');
+            newWatch.classList.remove('watch-highlight');
         }, 1000);
 
-        this.attachPurchaseClickHandlers();
+        this.attachWatchClickHandlers();
     }
 
     attachUserSelectListener() {
@@ -92,39 +92,36 @@ export class UserView extends View {
                 }
             } else {
                 this.#userAge.value = '';
-                this.#pastPurchasesList.innerHTML = '';
+                this.#watchedList.innerHTML = '';
             }
         });
     }
 
-    attachPurchaseClickHandlers() {
-        this.#pastPurchaseElements = [];
+    attachWatchClickHandlers() {
+        this.#watchedElements = [];
+        const watchElements = document.querySelectorAll('.past-watch');
 
-        const purchaseElements = document.querySelectorAll('.past-purchase');
+        watchElements.forEach(watchElement => {
+            this.#watchedElements.push(watchElement);
 
-        purchaseElements.forEach(purchaseElement => {
-            this.#pastPurchaseElements.push(purchaseElement);
-
-            purchaseElement.onclick = (event) => {
-
-                const product = JSON.parse(purchaseElement.dataset.product);
+            watchElement.onclick = (event) => {
+                const media = JSON.parse(watchElement.dataset.media);
                 const userId = this.getSelectedUserId();
-                const element = purchaseElement.closest('.col-md-6');
+                const element = watchElement.closest('.col-md-6') || watchElement;
 
-                this.#onPurchaseRemove({ element, userId, product });
+                if (this.#onWatchRemove) {
+                    this.#onWatchRemove({ element, userId, media });
+                }
 
                 element.style.transition = 'opacity 0.5s ease';
                 element.style.opacity = '0';
 
                 setTimeout(() => {
                     element.remove();
-
-                    if (document.querySelectorAll('.past-purchase').length === 0) {
-                        this.renderPastPurchases([]);
+                    if (document.querySelectorAll('.past-watch').length === 0) {
+                        this.renderPastWatches([]);
                     }
-
                 }, 500);
-
             }
         });
     }
