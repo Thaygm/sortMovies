@@ -2,6 +2,7 @@ export class UserController {
     #userService;
     #userView;
     #events;
+
     constructor({
         userView,
         userService,
@@ -24,25 +25,22 @@ export class UserController {
 
         this.#userView.renderUserOptions(defaultAndNonTrained);
         this.setupCallbacks();
-        this.setupPurchaseObserver();
+        this.setupWatchObserver();
 
         this.#events.dispatchUsersUpdated({ users: defaultAndNonTrained });
-
     }
 
     setupCallbacks() {
         this.#userView.registerUserSelectCallback(this.handleUserSelect.bind(this));
-        this.#userView.registerPurchaseRemoveCallback(this.handlePurchaseRemove.bind(this));
+        this.#userView.registerWatchRemoveCallback(this.handleWatchRemove.bind(this));
     }
 
-    setupPurchaseObserver() {
-
-        this.#events.onPurchaseAdded(
+    setupWatchObserver() {
+        this.#events.onWatchAdded(
             async (...data) => {
-                return this.handlePurchaseAdded(...data);
+                return this.handleWatchAdded(...data);
             }
         );
-
     }
 
     async handleUserSelect(userId) {
@@ -51,25 +49,28 @@ export class UserController {
         return this.displayUserDetails(user);
     }
 
-    async handlePurchaseAdded({ user, product }) {
+    async handleWatchAdded({ user, media }) {
         const updatedUser = await this.#userService.getUserById(user.id);
-        updatedUser.purchases.push({
-            ...product
-        })
+        
+        updatedUser.watched.push({
+            ...media,
+            watchedAt: new Date().toISOString()
+        });
 
         await this.#userService.updateUser(updatedUser);
 
-        const lastPurchase = updatedUser.purchases[updatedUser.purchases.length - 1];
-        this.#userView.addPastPurchase(lastPurchase);
+        const lastWatched = updatedUser.watched[updatedUser.watched.length - 1];
+        this.#userView.addPastWatch(lastWatched);
+        
         this.#events.dispatchUsersUpdated({ users: await this.#userService.getUsers() });
     }
 
-    async handlePurchaseRemove({ userId, product }) {
+    async handleWatchRemove({ userId, media }) {
         const user = await this.#userService.getUserById(userId);
-        const index = user.purchases.findIndex(item => item.id === product.id);
+        const index = user.watched.findIndex(item => item.id === media.id);
 
         if (index !== -1) {
-            user.purchases.splice(index, 1); // directly remove one item at the found index
+            user.watched.splice(index, 1); 
             await this.#userService.updateUser(user);
 
             const updatedUsers = await this.#userService.getUsers();
@@ -77,11 +78,9 @@ export class UserController {
         }
     }
 
-
     async displayUserDetails(user) {
         this.#userView.renderUserDetails(user);
-        this.#userView.renderPastPurchases(user.purchases);
-
+        this.#userView.renderPastWatches(user.watched);
     }
 
     getSelectedUserId() {

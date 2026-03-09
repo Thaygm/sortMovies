@@ -1,7 +1,7 @@
-
 export class TFVisorController {
     #tfVisorView;
     #events;
+
     constructor({
         tfVisorView,
         events,
@@ -31,5 +31,4 @@ export class TFVisorController {
             }
         );
     }
-
 }
