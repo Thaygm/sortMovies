@@ -1,87 +1,100 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-br">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>E-commerce Recommendation System</title>
+    <title>AI Movie Stream - Recommendation System</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
     <link rel="stylesheet" href="./style.css">
 </head>
 
 <body>
-    <div class="main">
-        <h1>E-commerce Recommendation System</h1>
+    <div class="container-fluid p-4">
+        <header class="d-flex justify-content-between align-items-center mb-5">
+            <h1 class="text-danger"><i class="bi bi-play-btn-fill"></i> AI MOVIE STREAM</h1>
+            <div id="trainingStatus" class="badge bg-dark border border-secondary p-2">
+                Modo: Inteligência Artificial Ativa
+            </div>
+        </header>
 
-        <div class="row mt-3">
-            <div class="col-md-4">
-                <div class="card mb-4">
-                    <div class="card-header">
-                        <h4>User Profile</h4>
+        <div class="row">
+            <div class="col-lg-5 col-md-12 mb-4">
+                <div class="card shadow">
+                    <div class="card-header d-flex justify-content-between align-items-center">
+                        <h5 class="mb-0">Perfil do Espectador</h5>
+                        <i class="bi bi-person-circle fs-4"></i>
                     </div>
                     <div class="card-body">
                         <form id="userForm">
                             <div class="row">
-                                <div class="col-md-6 mb-3">
-                                    <label for="userSelect" class="form-label">Select User</label>
+                                <div class="col-md-8 mb-3">
+                                    <label for="userSelect" class="form-label">Selecionar Perfil</label>
                                     <select class="form-select" id="userSelect">
-                                        <option value="">-- Select a user --</option>
+                                        <option value="">-- Selecione um usuário --</option>
                                     </select>
                                 </div>
-
-                                <div class="col-md-6 mb-3">
-                                    <label for="userAge" class="form-label">Age</label>
+                                <div class="col-md-4 mb-3">
+                                    <label for="userAge" class="form-label">Idade</label>
                                     <input type="number" class="form-control" id="userAge" disabled>
                                 </div>
                             </div>
                         </form>
 
-                        <div id="pastPurchasesContainer" class="mt-4">
-                            <h5>Past Purchases</h5>
-                            <div id="pastPurchasesList" class="row"></div>
+                        <div id="watchedContainer" class="mt-4">
+                            <h6 class="text-muted text-uppercase small fw-bold mb-3">Vistos Recentemente</h6>
+                            <div id="watchedList" class="row g-2">
+                                </div>
                         </div>
                     </div>
                 </div>
             </div>
 
-            <div class="col-md-4">
-                <div class="card mb-4">
-                    <div class="card-header">
-                        <h4>Model Training</h4>
+            <div class="col-lg-7 col-md-12 mb-4">
+                <div class="card shadow h-100">
+                    <div class="card-header bg-gradient text-white d-flex justify-content-between align-items-center">
+                        <h5 class="mb-0">Painel de Controle TensorFlow.js</h5>
+                        <span class="badge bg-primary">Deep Learning</span>
                     </div>
                     <div class="card-body">
-                        <div class="row">
-                            <div class="model-controls d-flex gap-2">
-                                <button id="trainModelBtn" class="btn btn-primary train-model-btn">
-                                    <i class="bi bi-cpu"></i> Train Model
+                        <div class="row mb-4">
+                            <div class="col-md-6">
+                                <button id="trainModelBtn" class="btn btn-primary w-100 py-2 mb-2">
+                                    <i class="bi bi-cpu-fill"></i> Treinar Rede Neural
                                 </button>
-                                <button disabled id="runRecommendationBtn" class="btn btn-success train-model-btn">
-                                    <i class="bi bi-cpu"></i> Run Recommendation
+                            </div>
+                            <div class="col-md-6">
+                                <button disabled id="runRecommendationBtn" class="btn btn-success w-100 py-2">
+                                    <i class="bi bi-magic"></i> Gerar Recomendações
                                 </button>
                             </div>
                         </div>
 
-
-                        <div class="all-users-purchases">
-                            <h5 id="purchasesDiv" style="cursor: pointer;">
-                                All Users Purchase Data
-                                <i id="purchasesArrow" class="bi bi-chevron-down"></i>
-                            </h5>
-                            <div id="allUsersPurchasesList" class="user-purchases-data overflow-auto"
-                                style="max-height: 400px;display: none;">
+                        <div class="all-users-data border-top pt-3">
+                            <div id="historyDiv" class="d-flex justify-content-between align-items-center cursor-pointer mb-3">
+                                <h6 class="mb-0"><i class="bi bi-database-fill-gear"></i> Dados de Treinamento (Histórico Global)</h6>
+                                <i id="historyArrow" class="bi bi-chevron-down"></i>
                             </div>
+                            <div id="allUsersWatchList" class="user-watch-data p-3 rounded" 
+                            style="max-height: 250px; display: none; background: rgba(0,0,0,0.2);">
+                                </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
 
-        <h3 class="">Products</h3>
-        <div class="row" id="productList">
-        </div>
-    </div>
+        <hr class="my-5 border-secondary">
 
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h3>Explorar Filmes e Séries</h3>
+            <div class="text-muted small">Ordenado por: <span class="text-white">Relevância da IA</span></div>
+        </div>
+
+        <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-4" id="mediaList">
+            </div>
+    </div>
 
     <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs-vis@1.5.1/dist/tfjs-vis.umd.min.js"></script>
     <script type="module" src="./src/index.js"></script>

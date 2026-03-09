@@ -1,28 +1,26 @@
 import { UserController } from './controller/UserController.js';
-import { ProductController } from './controller/ProductController.js';
+import { MediaController } from './controller/MediaController.js';
 import { ModelController } from './controller/ModelTrainingController.js';
 import { TFVisorController } from './controller/TFVisorController.js';
 import { TFVisorView } from './view/TFVisorView.js';
 import { UserService } from './service/UserService.js';
-import { ProductService } from './service/ProductService.js';
+import { MediaService } from './service/MediaService.js'; 
 import { UserView } from './view/UserView.js';
-import { ProductView } from './view/ProductView.js';
+import { MediaView } from './view/MediaView.js';      
 import { ModelView } from './view/ModelTrainingView.js';
 import Events from './events/events.js';
 import { WorkerController } from './controller/WorkerController.js';
 
-// Create shared services
 const userService = new UserService();
-const productService = new ProductService();
+const mediaService = new MediaService();
 
-// Create views
 const userView = new UserView();
-const productView = new ProductView();
+const mediaView = new MediaView();
 const modelView = new ModelView();
 const tfVisorView = new TFVisorView();
+
 const mlWorker = new Worker('/src/workers/modelTrainingWorker.js', { type: 'module' });
 
-// Set up worker message handler
 const w = WorkerController.init({
     worker: mlWorker,
     events: Events
@@ -30,7 +28,6 @@ const w = WorkerController.init({
 
 const users = await userService.getDefaultUsers();
 w.triggerTrain(users);
-
 
 ModelController.init({
     modelView,
@@ -43,25 +40,23 @@ TFVisorController.init({
     events: Events,
 });
 
-ProductController.init({
-    productView,
+MediaController.init({
+    mediaView,
     userService,
-    productService,
+    mediaService,
     events: Events,
 });
-
 
 const userController = UserController.init({
     userView,
     userService,
-    productService,
+    mediaService,
     events: Events,
 });
 
-
 userController.renderUsers({
     "id": 99,
-    "name": "Josézin da Silva",
+    "name": "Josézin Cinefilo",
     "age": 30,
-    "purchases": []
+    "watched": [] 
 });
