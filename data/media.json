@@ -1,0 +1,72 @@
+[
+    {
+        "id": 1,
+        "title": "Interestelar",
+        "genre": "Sci-Fi",
+        "rating": 8.7,
+        "type": "Filme"
+    },
+    {
+        "id": 2,
+        "title": "The Last of Us",
+        "genre": "Drama",
+        "rating": 8.8,
+        "type": "Série"
+    },
+    {
+        "id": 3,
+        "title": "Oppenheimer",
+        "genre": "Drama",
+        "rating": 8.4,
+        "type": "Filme"
+    },
+    {
+        "id": 4,
+        "title": "The Office",
+        "genre": "Comédia",
+        "rating": 9.0,
+        "type": "Série"
+    },
+    {
+        "id": 5,
+        "title": "Stranger Things",
+        "genre": "Sci-Fi",
+        "rating": 8.7,
+        "type": "Série"
+    },
+    {
+        "id": 6,
+        "title": "Batman: O Cavaleiro das Trevas",
+        "genre": "Ação",
+        "rating": 9.0,
+        "type": "Filme"
+    },
+    {
+        "id": 7,
+        "title": "Se Beber, Não Case",
+        "genre": "Comédia",
+        "rating": 7.7,
+        "type": "Filme"
+    },
+    {
+        "id": 8,
+        "title": "John Wick",
+        "genre": "Ação",
+        "rating": 7.4,
+        "type": "Filme"
+    },
+    {
+        "id": 9,
+        "title": "Duna",
+        "genre": "Sci-Fi",
+        "rating": 8.0,
+        "type": "Filme"
+    },
+    {
+        "id": 10,
+        "title": "Succession",
+        "genre": "Drama",
+        "rating": 8.9,
+        "type": "Série"
+    }
+]
