@@ -1,39 +1,56 @@
-# E-commerce Recommendation System
+AI Movie Recommendation System 🍿
+Um sistema de recomendação de filmes e séries de ponta a ponta que utiliza TensorFlow.js para aprender as preferências dos usuários em tempo real. A aplicação utiliza uma rede neural densa para analisar gêneros, tipos de mídia e avaliações, reordenando o catálogo dinamicamente para cada perfil.
 
-A web application that displays user profiles and product listings, with the ability to track user purchases for future machine learning recommendations using TensorFlow.js.
+🚀 Estrutura do Projeto
+index.html - Interface principal (Dark Mode) baseada em Bootstrap.
 
-## Project Structure
+src/index.js - Ponto de entrada e orquestração dos controladores.
 
-- `index.html` - Main HTML file for the application
-- `index.js` - Entry point for the application
-- `view/` - Contains classes for managing the DOM and templates
-- `controller/` - Contains controllers to connect views and services
-- `service/` - Contains business logic for data handling
-- `data/` - Contains JSON files with user and product data
+src/workers/ - Contém o Web Worker de treinamento da IA, permitindo processamento pesado fora da thread principal da UI.
 
-## Setup and Run
+src/view/ - Gerenciamento do DOM e renderização de templates dinâmicos.
 
-1. Install dependencies:
-```
+src/controller/ - Ponte entre a lógica de negócio e a interface.
+
+src/service/ - Persistência de dados (SessionStorage) e consumo de APIs/JSON.
+
+data/ - Base de dados sintética com catálogos de mídia e perfis de usuários.
+
+🧠 Tecnologias Utilizadas
+TensorFlow.js: Treinamento e inferência da rede neural no navegador.
+
+TFJS Vis: Visualização em tempo real das métricas de treinamento (Loss e Accuracy).
+
+Web Workers: Treinamento assíncrono para evitar travamentos na interface.
+
+Bootstrap & Icons: UI responsiva com tema Dark customizado.
+
+🛠️ Como Rodar
+Instale as dependências:
+
+Bash
 npm install
-```
+Inicie o servidor local:
 
-2. Start the application:
-```
+Bash
 npm start
-```
+Acesse no navegador:
+http://localhost:8080
 
-3. Open your browser and navigate to `http://localhost:8080`
+✨ Funcionalidades
+Treinamento On-the-fly: Clique em "Treinar Rede Neural" para que a IA processe o histórico global de todos os usuários.
 
-## Features
+Personalização Dinâmica: Selecione um usuário e veja o catálogo ser reordenado instantaneamente com base no "Score de Relevância" calculado pela IA.
 
-- User profile selection with details display
-- Past purchase history display
-- Product listing with "Buy Now" functionality
-- Purchase tracking using sessionStorage
+Feedback Visual: Gráficos em tempo real mostram o modelo aprendendo as correlações entre gêneros e perfis.
 
-## Future Enhancements
+Simulação de Histórico: Adicione novos filmes ao perfil para ver a IA se adaptar às suas novas escolhas.
 
-- TensorFlow.js-based recommendation engine
-- User similarity analysis
-- Product recommendation based on purchase history
+📊 O Modelo de IA
+O modelo utiliza uma arquitetura de rede neural profunda (Deep Neural Network) que processa:
+
+Vetores de Usuário: Baseados na média das características (Gênero, Tipo) dos filmes já assistidos.
+
+Vetores de Mídia: Codificação One-Hot de gêneros e normalização de ratings.
+
+Saída: Uma camada Sigmoid que prevê a probabilidade (0 a 1) do usuário gostar de um título específico.
