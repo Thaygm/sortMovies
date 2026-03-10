@@ -1,7 +1,7 @@
 [
     {
         "id": 1,
-        "name": "Ana Lima",
+        "name": "Alex Karev",
         "age": 25,
         "watched": [
             { "id": 1, "title": "Interestelar", "genre": "Sci-Fi" },
@@ -10,7 +10,7 @@
     },
     {
         "id": 2,
-        "name": "Bruno Ferreira",
+        "name": "Damon Salvatore",
         "age": 35,
         "watched": [
             { "id": 6, "title": "Batman: O Cavaleiro das Trevas", "genre": "Ação" },
@@ -19,7 +19,7 @@
     },
     {
         "id": 3,
-        "name": "Camila Souza",
+        "name": "Alec Lightwood",
         "age": 22,
         "watched": [
             { "id": 4, "title": "The Office", "genre": "Comédia" },
@@ -28,7 +28,7 @@
     },
     {
         "id": 4,
-        "name": "Diego Almeida",
+        "name": "Mary Poppins",
         "age": 28,
         "watched": [
             { "id": 8, "title": "John Wick", "genre": "Ação" },
@@ -37,7 +37,7 @@
     },
     {
         "id": 5,
-        "name": "Eduarda Nunes",
+        "name": "Lisa Simpson",
         "age": 42,
         "watched": [
             { "id": 2, "title": "The Last of Us", "genre": "Drama" },
@@ -47,16 +47,17 @@
     },
     {
         "id": 6,
-        "name": "Fabio Santos",
+        "name": "Cristina Yang",
         "age": 19,
         "watched": [
             { "id": 4, "title": "The Office", "genre": "Comédia" },
-            { "id": 7, "title": "Se Beber, Não Case", "genre": "Comédia" }
+            { "id": 7, "title": "Se Beber, Não Case", "genre": "Comédia" },
+            { "id": 13, "title": "Brooklyn Nine-Nine", "genre": "Comédia" }
         ]
     },
     {
         "id": 7,
-        "name": "Gabi Rocha",
+        "name": "Hermione Granger",
         "age": 31,
         "watched": [
             { "id": 1, "title": "Interestelar", "genre": "Sci-Fi" },
@@ -65,11 +66,50 @@
     },
     {
         "id": 8,
-        "name": "Helena Viggo",
+        "name": "Bjorn Lothbrok",
         "age": 50,
         "watched": [
             { "id": 3, "title": "Oppenheimer", "genre": "Drama" },
-            { "id": 10, "title": "Succession", "genre": "Drama" }
+            { "id": 10, "title": "Succession", "genre": "Drama" },
+            { "id": 16, "title": "Breaking Bad", "genre": "Drama" }
+        ]
+    },
+    {
+        "id": 9,
+        "name": "Meredith Grey",
+        "age": 24,
+        "watched": [
+            { "id": 11, "title": "O Iluminado", "genre": "Terror" },
+            { "id": 12, "title": "Hereditário", "genre": "Terror" },
+            { "id": 21, "title": "Invocação do Mal", "genre": "Terror" }
+        ]
+    },
+    {
+        "id": 10,
+        "name": "Gregory House",
+        "age": 29,
+        "watched": [
+            { "id": 14, "title": "Spider-Man: Através do Aranhaverso", "genre": "Animação" },
+            { "id": 15, "title": "Arcane", "genre": "Animação" },
+            { "id": 22, "title": "Shrek", "genre": "Animação" }
+        ]
+    },
+    {
+        "id": 11,
+        "name": "Sheldon Cooper",
+        "age": 33,
+        "watched": [
+            { "id": 17, "title": "Mindhunter", "genre": "Suspense" },
+            { "id": 18, "title": "Seven: Os Sete Crimes Capitais", "genre": "Suspense" }
+        ]
+    },
+    {
+        "id": 12,
+        "name": "Dean Winchester",
+        "age": 38,
+        "watched": [
+            { "id": 19, "title": "Nosso Planeta", "genre": "Documentário" },
+            { "id": 20, "title": "O Dilema das Redes", "genre": "Documentário" }
         ]
     }
 ]
