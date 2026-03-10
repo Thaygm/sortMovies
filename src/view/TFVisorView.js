@@ -1,7 +1,7 @@
+// TFVisorView.js
 import { View } from './View.js';
 
 export class TFVisorView extends View {
-    // Mantemos a lógica de pontos para Loss e Accuracy
     #lossPoints = [];
     #accPoints = [];
 
@@ -22,15 +22,15 @@ export class TFVisorView extends View {
         this.#accPoints.push({ x: epoch, y: accuracy });
 
         tfvis.render.linechart(
-            { name: 'Precisão (Gêneros/Rating)', tab: 'Treinamento', style: { width: '49%' } },
-            { values: this.#accPoints, series: ['precisão'] },
-            { xLabel: 'Época', yLabel: 'Precisão', height: 300 }
+            { name: 'Precisão (Accuracy)', tab: 'Treinamento' },
+            { values: this.#accPoints, series: ['Acurácia'] },
+            { xLabel: 'Época', yLabel: 'Precisão', height: 250 }
         );
 
         tfvis.render.linechart(
-            { name: 'Erro de Recomendação', tab: 'Treinamento', style: { width: '49%' } },
-            { values: this.#lossPoints, series: ['erro'] },
-            { xLabel: 'Época', yLabel: 'Loss', height: 300 }
+            { name: 'Erro de Recomendação (Loss)', tab: 'Treinamento' },
+            { values: this.#lossPoints, series: ['Erro'] },
+            { xLabel: 'Época', yLabel: 'Loss', height: 250 }
         );
     }
 }
